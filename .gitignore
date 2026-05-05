@@ -1,0 +1,9 @@
+build/
+*.o
+*.out
+*.dSYM/
+.DS_Store
+.env
+*.log
+*.pcap
+*.pcapng
