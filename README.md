@@ -1,30 +1,58 @@
-# C Memory Safety Lab
+# Progressive C cybersecurity labs
 
-This lab is designed to teach secure C programming concepts that are directly relevant to cybersecurity.
+Structured, **defensive** C exercises from beginner patterns to advanced topics (static analysis, sanitizers, safe parsing, and **authorised** network-data handling). Each directory under `labs/` is a self-contained module with its own `Makefile` and `README.md`.
 
-## Goals
-- Understand common C memory safety issues
-- Compare unsafe and safe string handling patterns
-- Build secure C code with macOS-friendly APIs
-- Document secure coding choices for sharing on GitHub
+## Vision
 
-## Build and run
-```sh
-cd c-memory-safety-lab
-clang -Wall -Wextra -Werror -o build/main src/main.c
-./build/main
+- Teach **memory safety**, **secure API choice**, and **verification** (compile-time warnings, cppcheck, ASan/UBSan).
+- Keep **intentionally vulnerable** programs **labelled**, **local**, and **out of CI** where they are expected to crash.
+- Stay suitable for **macOS / Apple Silicon** using Apple Clang and GNU Make.
+
+## Repository layout
+
+```text
+labs/01-secure-string-handling/   # Bounded vs unbounded string handling
+labs/02-stack-buffer-overflow/     # Stack overflow + remediation (+ optional local ASan demo)
+docs/                            # Roadmap, methodology, setup, notes
+scripts/                         # Convenience wrappers
 ```
 
-## What this example shows
-- an unsafe string copy pattern using `strcpy`
-- a safer alternative using `strlcpy`
-- why explicit bounds checking matters in security-sensitive C code
+## Roadmap
 
-## Recommendations
-- Use `-Wall -Wextra -Werror` when compiling
-- Run sanitizers when experimenting with vulnerable code:
-  - `clang -fsanitize=address,undefined -g src/main.c -o build/main`
-- Keep vulnerable examples clearly labeled and never reuse them in production code
+See [docs/roadmap.md](docs/roadmap.md) for the full progression (heap overflow, use-after-free, integer issues, format strings, parsing, fuzzing, offline PCAP/DNS/TCP defensive checks, and more).
 
-## GitHub sharing
-For guidance on GitHub setup and project sharing on macOS, see `docs/github-on-macos.md`.
+## Quick start
+
+Requirements: **Apple Clang**, **GNU Make**, **cppcheck** (see [docs/macos-setup.md](docs/macos-setup.md)).
+
+```sh
+git clone https://github.com/yusufdalbudak/c-memory-safety-lab.git
+cd c-memory-safety-lab
+make ci
+```
+
+### Run individual labs
+
+```sh
+make lab-01    # secure string handling (run)
+make lab-02    # stack overflow lab — safe fixed build (same as lab’s `make fixed`)
+```
+
+### Safe CI target (no crash demo)
+
+`make ci` runs: Lab 01 `run`, `sanitize`, `analyze`; Lab 02 `fixed`, `analyze-safe`. It never runs the lab 02 **vulnerable** (ASan-aborting) target.
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [docs/roadmap.md](docs/roadmap.md) | Planned lab sequence |
+| [docs/lab-methodology.md](docs/lab-methodology.md) | How each lab is structured |
+| [docs/secure-c-coding-notes.md](docs/secure-c-coding-notes.md) | Short defensive C notes |
+| [docs/macos-setup.md](docs/macos-setup.md) | Toolchain and tools on macOS |
+| [SECURITY.md](SECURITY.md) | Scope and responsible use |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+
+## License
+
+See [LICENSE.md](LICENSE.md).

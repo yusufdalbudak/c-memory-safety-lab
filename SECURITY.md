@@ -1,15 +1,29 @@
-# Security Guidance
+# Security policy and scope
 
-This repository includes learning material and example code to demonstrate memory safety concepts in C.
+## Nature of this project
 
-## Important notes
-- Do not treat this code as production-ready security software.
-- The sample code is intended for educational use only.
-- Always review and sanitize inputs when writing C code.
-- Avoid storing secrets, credentials, or sensitive data in Git repositories.
+This is an **educational** and **defensive** project. It teaches secure C practices, static analysis, and sanitizer-assisted verification using **synthetic** examples.
 
-## Secure coding best practices shown here
-- Validate buffer sizes before copying data
-- Prefer bounded APIs such as `strlcpy` and `snprintf`
-- Use compiler warnings and sanitizers to catch unsafe behavior
-- Document unsafe code paths clearly so reviewers understand the risk
+## Intentionally vulnerable examples
+
+Some source files are **deliberately unsafe** (for example, a stack buffer overflow demo). They exist **only** to support **local** learning with **AddressSanitizer**, **UndefinedBehaviorSanitizer**, and **static analysis**. They are **not** production code.
+
+**The project must only be used in local or authorised environments.** Do not run untrusted inputs through sample programs, deploy lab binaries to production, or use vulnerable demos outside a controlled lab setup.
+
+## Out of scope
+
+This repository does **not** endorse or provide:
+
+- Exploit chains, shellcode, or weaponised proofs of concept  
+- Credential theft, persistence, or defence bypass  
+- Unauthorised network scanning or access  
+
+Contributions should stay aligned with **defensive** security engineering.
+
+## Reporting
+
+Use GitHub Issues for **non-sensitive** documentation or lab correctness problems. For sensitive coordination, follow any contact instructions posted in the repository or organisation profile.
+
+## Disclaimer
+
+Materials are provided **as-is** for learning. Authors and contributors are not responsible for misuse outside educational, authorised contexts.

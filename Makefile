@@ -1,43 +1,25 @@
-CC=clang
+.PHONY: ci lab-01 lab-02 analyze clean
 
-CFLAGS=-std=c17 -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wformat=2 -g
-SANFLAGS=-fsanitize=address,undefined -fno-omit-frame-pointer
+LAB01=labs/01-secure-string-handling
+LAB02=labs/02-stack-buffer-overflow
 
-SRC=src/main.c
-OUT=build/c-memory-safety-lab
-SANOUT=build/c-memory-safety-lab-sanitize
+ci: clean
+	$(MAKE) -C $(LAB01) run
+	$(MAKE) -C $(LAB01) sanitize
+	$(MAKE) -C $(LAB01) analyze
+	$(MAKE) -C $(LAB02) fixed
+	$(MAKE) -C $(LAB02) analyze-safe
 
-.PHONY: all run sanitize analyze analyze-vuln overflow-demo overflow-fixed ci clean
+lab-01:
+	$(MAKE) -C $(LAB01) run
 
-all:
-	mkdir -p build
-	$(CC) $(CFLAGS) $(SRC) -o $(OUT)
-
-run: all
-	./$(OUT)
-
-sanitize:
-	mkdir -p build
-	$(CC) $(CFLAGS) $(SANFLAGS) $(SRC) -o $(SANOUT)
-	./$(SANOUT)
+lab-02:
+	$(MAKE) -C $(LAB02) fixed
 
 analyze:
-	cppcheck --enable=all --inconclusive --std=c17 --suppress=missingIncludeSystem src/main.c src/fixed_overflow.c
-
-analyze-vuln:
-	cppcheck --enable=all --inconclusive --std=c17 --suppress=missingIncludeSystem src/vulnerable_overflow.c || true
+	$(MAKE) -C $(LAB01) analyze
+	$(MAKE) -C $(LAB02) analyze-safe
 
 clean:
-	rm -rf build *.dSYM
-
-overflow-demo:
-	mkdir -p build
-	$(CC) $(CFLAGS) $(SANFLAGS) src/vulnerable_overflow.c -o build/vulnerable-overflow
-	./build/vulnerable-overflow
-
-overflow-fixed:
-	mkdir -p build
-	$(CC) $(CFLAGS) $(SANFLAGS) src/fixed_overflow.c -o build/fixed-overflow
-	./build/fixed-overflow
-
-ci: clean run sanitize analyze overflow-fixed
+	$(MAKE) -C $(LAB01) clean
+	$(MAKE) -C $(LAB02) clean
