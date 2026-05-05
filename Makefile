@@ -23,3 +23,4 @@ analyze:
 clean:
 	$(MAKE) -C $(LAB01) clean
 	$(MAKE) -C $(LAB02) clean
+	rm -rf build *.dSYM
