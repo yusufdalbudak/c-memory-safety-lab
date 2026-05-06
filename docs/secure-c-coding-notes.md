@@ -22,6 +22,14 @@ Run **cppcheck** or your organisation’s analyser on changed files. Treat new f
 
 `strlen` is O(n) and says nothing about **allocated** size. Mixing UTF-8 **characters** with **byte** counts causes subtle bugs; be explicit about what “length” means.
 
+## Memory canaries and guard words
+
+Place **known sentinel values** adjacent to high-risk buffers (or rely on compiler stack canaries) and **verify** them after every writer completes. This catches many **single-sided** overflows when sanitizers are not running.
+
+## Zeroize secrets on all paths before reuse
+
+Plain `memset` before `return` may be optimized away. Use **volatile** clearing helpers (or `explicit_bzero` / `memset_s` when available) so credentials do not linger in stack or static storage.
+
 ## After fixing: verify
 
 Re-run analysis and sanitizer builds. For labs with a **fixed** target, ensure the remediated path passes your safe CI recipe.

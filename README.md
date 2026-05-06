@@ -26,6 +26,8 @@ labs/12-dns-response-parser/
 labs/13-tcp-metadata-checker/
 labs/14-hashing-integrity-checker/
 labs/15-secure-mini-toolkit/
+labs/16-memory-canary-guard/    # Manual canaries around buffers
+labs/17-secure-memory-zeroization/
 docs/                              # Roadmap, methodology, setup, notes
 scripts/                           # Convenience wrappers
 ```
@@ -48,17 +50,19 @@ make ci
 
 ```sh
 make lab-01    # secure strings (run)
-make lab-02    # … through lab-09, 11–13: safe `fixed` demo
+make lab-02    # … through lab-09, 11–13, 16–17: safe `fixed` demo
 make lab-10    # harness demo (make run)
 make lab-14    # SHA-256 demo (make run)
 make lab-15    # mini toolkit (make run)
+make lab-16    # memory canaries (fixed)
+make lab-17    # secure zeroization (fixed)
 ```
 
-Or: `./scripts/run-lab.sh 07` … `./scripts/run-lab.sh 15`.
+Or: `./scripts/run-lab.sh 07` … `./scripts/run-lab.sh 17`.
 
 ### Safe CI target (no intentional crash demos)
 
-`make ci` runs Lab 01 `run`, `sanitize`, `analyze`; Labs **02–09, 11–13** `fixed` + `analyze-safe`; Lab **10** `run`, **`stress`**, and **`analyze`**; Labs **14–15** `run` + **`analyze`**. It never runs **`make vulnerable`** targets.
+`make ci` runs Lab 01 `run`, `sanitize`, `analyze`; Labs **02–09, 11–13, 16–17** `fixed` + `analyze-safe`; Lab **10** `run`, **`stress`**, and **`analyze`**; Labs **14–15** `run` + **`analyze`**. It never runs **`make vulnerable`** targets.
 
 ## Documentation
 

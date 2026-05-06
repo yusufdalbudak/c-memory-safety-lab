@@ -19,5 +19,7 @@ This roadmap orders topics from foundational memory and string safety toward **d
 | 13 | TCP metadata checker | Header sanity checks on **stored** segments |
 | 14 | Hashing integrity checker | Compare digests for file **integrity** |
 | 15 | Secure mini toolkit | Composed patterns: config, logging, errors |
+| 16 | Memory canary guard | Detect spills with sentinel words around buffers |
+| 17 | Secure memory zeroization | Volatile clearing before secret buffers are reused |
 
-Status: **01–15** are implemented in this repository.
+Status: **01–17** are implemented in this repository.
