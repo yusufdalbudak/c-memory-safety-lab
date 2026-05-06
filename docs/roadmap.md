@@ -20,4 +20,4 @@ This roadmap orders topics from foundational memory and string safety toward **d
 | 14 | Hashing integrity checker | Compare digests for file **integrity** |
 | 15 | Secure mini toolkit | Composed patterns: config, logging, errors |
 
-Status: **01** and **02** are implemented in this repository. Later rows are **planned** expansions.
+Status: **01–06** are implemented in this repository. Labs **07–15** are planned expansions.

@@ -12,7 +12,11 @@ Structured, **defensive** C exercises from beginner patterns to advanced topics 
 
 ```text
 labs/01-secure-string-handling/   # Bounded vs unbounded string handling
-labs/02-stack-buffer-overflow/     # Stack overflow + remediation (+ optional local ASan demo)
+labs/02-stack-buffer-overflow/    # Stack overflow + remediation
+labs/03-heap-buffer-overflow/     # Heap overflow + remediation
+labs/04-use-after-free/          # UAF + remediation
+labs/05-integer-overflow/         # Allocation sizing + overflow checks
+labs/06-format-string/           # Format string misuse vs constant format
 docs/                            # Roadmap, methodology, setup, notes
 scripts/                         # Convenience wrappers
 ```
@@ -35,12 +39,16 @@ make ci
 
 ```sh
 make lab-01    # secure string handling (run)
-make lab-02    # stack overflow lab — safe fixed build (same as lab’s `make fixed`)
+make lab-02    # stack overflow — safe `fixed` demo
+make lab-03    # heap overflow — safe `fixed` demo
+make lab-04    # use-after-free — safe `fixed` demo
+make lab-05    # integer overflow — safe `fixed` demo
+make lab-06    # format string — safe `fixed` demo
 ```
 
 ### Safe CI target (no crash demo)
 
-`make ci` runs: Lab 01 `run`, `sanitize`, `analyze`; Lab 02 `fixed`, `analyze-safe`. It never runs the lab 02 **vulnerable** (ASan-aborting) target.
+`make ci` runs Lab 01 `run`, `sanitize`, `analyze`, then Labs 02–06 `fixed` and `analyze-safe`. It never runs **vulnerable** / ASan-aborting targets from those labs.
 
 ## Documentation
 
