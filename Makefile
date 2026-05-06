@@ -1,5 +1,5 @@
 .PHONY: ci lab-01 lab-02 lab-03 lab-04 lab-05 lab-06 lab-07 lab-08 lab-09 lab-10 \
-	lab-11 lab-12 lab-13 lab-14 lab-15 lab-16 lab-17 analyze clean
+	lab-11 lab-12 lab-13 lab-14 lab-15 lab-16 lab-17 lab-18 analyze clean
 
 LAB01=labs/01-secure-string-handling
 LAB02=labs/02-stack-buffer-overflow
@@ -18,6 +18,7 @@ LAB14=labs/14-hashing-integrity-checker
 LAB15=labs/15-secure-mini-toolkit
 LAB16=labs/16-memory-canary-guard
 LAB17=labs/17-secure-memory-zeroization
+LAB18=labs/18-secure-build-profiles
 
 ci: clean
 	$(MAKE) -C $(LAB01) run
@@ -56,6 +57,9 @@ ci: clean
 	$(MAKE) -C $(LAB16) analyze-safe
 	$(MAKE) -C $(LAB17) fixed
 	$(MAKE) -C $(LAB17) analyze-safe
+	$(MAKE) -C $(LAB18) dev
+	$(MAKE) -C $(LAB18) hardened
+	$(MAKE) -C $(LAB18) analyze
 
 lab-01:
 	$(MAKE) -C $(LAB01) run
@@ -108,6 +112,9 @@ lab-16:
 lab-17:
 	$(MAKE) -C $(LAB17) fixed
 
+lab-18:
+	$(MAKE) -C $(LAB18) dev
+
 analyze:
 	$(MAKE) -C $(LAB01) analyze
 	$(MAKE) -C $(LAB02) analyze-safe
@@ -126,6 +133,7 @@ analyze:
 	$(MAKE) -C $(LAB15) analyze
 	$(MAKE) -C $(LAB16) analyze-safe
 	$(MAKE) -C $(LAB17) analyze-safe
+	$(MAKE) -C $(LAB18) analyze
 
 clean:
 	$(MAKE) -C $(LAB01) clean
@@ -145,4 +153,5 @@ clean:
 	$(MAKE) -C $(LAB15) clean
 	$(MAKE) -C $(LAB16) clean
 	$(MAKE) -C $(LAB17) clean
+	$(MAKE) -C $(LAB18) clean
 	rm -rf build *.dSYM

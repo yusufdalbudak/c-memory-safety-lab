@@ -5,11 +5,12 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 usage() {
-  echo "Usage: $(basename "$0") <01–17, zero-padded>" >&2
+  echo "Usage: $(basename "$0") <01–18, zero-padded>" >&2
   echo "  01 — secure string handling (make run)" >&2
   echo "  02–09,11–13,16–17 — safe path (make fixed)" >&2
   echo "  10 — fuzzing harness demo (make run)" >&2
   echo "  14–15 — toolkit / hashing demo (make run)" >&2
+  echo "  18 — secure build profiles (make dev)" >&2
   exit 1
 }
 
@@ -33,5 +34,6 @@ case "$1" in
   15) exec make -C labs/15-secure-mini-toolkit run ;;
   16) exec make -C labs/16-memory-canary-guard fixed ;;
   17) exec make -C labs/17-secure-memory-zeroization fixed ;;
+  18) exec make -C labs/18-secure-build-profiles dev ;;
   *) usage ;;
 esac

@@ -26,3 +26,5 @@ You connect the tool output to **why** the program violated the language memory 
 The lab ends with a **fixed** variant or checklist: validation order, bounded APIs, error handling, tests, and documentation so reviewers understand trust boundaries.
 
 This methodology is **not** about building exploits; it is about **recognising** defects, **proving** them with tools, and **fixing** them systematically.
+
+For **where** these steps may run (workstation vs CI vs production) and **how** that maps to secure delivery architecture, see [secure-environment-architecture.md](secure-environment-architecture.md).

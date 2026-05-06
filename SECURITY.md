@@ -10,6 +10,8 @@ Some source files are **deliberately unsafe** (for example, a stack buffer overf
 
 **The project must only be used in local or authorised environments.** Do not run untrusted inputs through sample programs, deploy lab binaries to production, or use vulnerable demos outside a controlled lab setup.
 
+For a defensive framing of **where** vulnerable code may run versus **CI / production**, and how **toolchain hardening** fits your architecture, see [docs/secure-environment-architecture.md](docs/secure-environment-architecture.md).
+
 ## Out of scope
 
 This repository does **not** endorse or provide:
