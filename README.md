@@ -1,33 +1,42 @@
 # Progressive C cybersecurity labs
 
-Structured, **defensive** C exercises from beginner patterns to advanced topics (static analysis, sanitizers, safe parsing, and **authorised** network-data handling). Each directory under `labs/` is a self-contained module with its own `Makefile` and `README.md`.
+Structured, **defensive** C exercises from beginner patterns to advanced topics (static analysis, sanitizers, safe parsing, fuzzing, and **offline** capture handling). Each directory under `labs/` is a self-contained module with its own `Makefile` and `README.md`.
 
 ## Vision
 
 - Teach **memory safety**, **secure API choice**, and **verification** (compile-time warnings, cppcheck, ASan/UBSan).
 - Keep **intentionally vulnerable** programs **labelled**, **local**, and **out of CI** where they are expected to crash.
-- Stay suitable for **macOS / Apple Silicon** using Apple Clang and GNU Make.
+- Stay suitable for **macOS / Apple Silicon** using Apple Clang and GNU Make (`CommonCrypto` in Lab 14).
 
 ## Repository layout
 
 ```text
-labs/01-secure-string-handling/   # Bounded vs unbounded string handling
-labs/02-stack-buffer-overflow/    # Stack overflow + remediation
-labs/03-heap-buffer-overflow/     # Heap overflow + remediation
-labs/04-use-after-free/          # UAF + remediation
-labs/05-integer-overflow/         # Allocation sizing + overflow checks
-labs/06-format-string/           # Format string misuse vs constant format
-docs/                            # Roadmap, methodology, setup, notes
-scripts/                         # Convenience wrappers
+labs/01-secure-string-handling/     # Strings & bounds
+labs/02-stack-buffer-overflow/
+labs/03-heap-buffer-overflow/
+labs/04-use-after-free/
+labs/05-integer-overflow/
+labs/06-format-string/
+labs/07-secure-file-parsing/       # File size caps
+labs/08-binary-inspector/
+labs/09-tlv-parser/
+labs/10-fuzzing-harness/          # Parser + deterministic stress loop (+ optional libFuzzer)
+labs/11-pcap-offline-analysis/
+labs/12-dns-response-parser/
+labs/13-tcp-metadata-checker/
+labs/14-hashing-integrity-checker/
+labs/15-secure-mini-toolkit/
+docs/                              # Roadmap, methodology, setup, notes
+scripts/                           # Convenience wrappers
 ```
 
 ## Roadmap
 
-See [docs/roadmap.md](docs/roadmap.md) for the full progression (heap overflow, use-after-free, integer issues, format strings, parsing, fuzzing, offline PCAP/DNS/TCP defensive checks, and more).
+See [docs/roadmap.md](docs/roadmap.md) for topic order and focus.
 
 ## Quick start
 
-Requirements: **Apple Clang**, **GNU Make**, **cppcheck** (see [docs/macos-setup.md](docs/macos-setup.md)).
+Requirements: **Apple Clang**, **GNU Make**, **cppcheck** (see [docs/macos-setup.md](docs/macos-setup.md)). Lab **10** also runs a **stress** harness under **ASan/UBSan**; optional **`make -C labs/10-fuzzing-harness fuzz-libfuzzer`** needs a Clang build that ships the **libFuzzer** runtime (not present in all Xcode toolchains).
 
 ```sh
 git clone https://github.com/yusufdalbudak/c-memory-safety-lab.git
@@ -38,17 +47,18 @@ make ci
 ### Run individual labs
 
 ```sh
-make lab-01    # secure string handling (run)
-make lab-02    # stack overflow — safe `fixed` demo
-make lab-03    # heap overflow — safe `fixed` demo
-make lab-04    # use-after-free — safe `fixed` demo
-make lab-05    # integer overflow — safe `fixed` demo
-make lab-06    # format string — safe `fixed` demo
+make lab-01    # secure strings (run)
+make lab-02    # … through lab-09, 11–13: safe `fixed` demo
+make lab-10    # harness demo (make run)
+make lab-14    # SHA-256 demo (make run)
+make lab-15    # mini toolkit (make run)
 ```
 
-### Safe CI target (no crash demo)
+Or: `./scripts/run-lab.sh 07` … `./scripts/run-lab.sh 15`.
 
-`make ci` runs Lab 01 `run`, `sanitize`, `analyze`, then Labs 02–06 `fixed` and `analyze-safe`. It never runs **vulnerable** / ASan-aborting targets from those labs.
+### Safe CI target (no intentional crash demos)
+
+`make ci` runs Lab 01 `run`, `sanitize`, `analyze`; Labs **02–09, 11–13** `fixed` + `analyze-safe`; Lab **10** `run`, **`stress`**, and **`analyze`**; Labs **14–15** `run` + **`analyze`**. It never runs **`make vulnerable`** targets.
 
 ## Documentation
 

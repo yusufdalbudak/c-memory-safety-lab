@@ -49,6 +49,10 @@ gh auth login
 
 ASan is enabled through Clang (`-fsanitize=address`). On Apple platforms it is supported for local development builds; run sanitizer targets only on **non-production** binaries and data.
 
+## LibFuzzer (optional, Lab 10)
+
+Some Xcode distributions omit the `libclang_rt.fuzzer_osx` runtime. Lab **10** runs a portable **`make stress`** target under ASan/UBSan in CI. To try **true** libFuzzer linking, run `make -C labs/10-fuzzing-harness fuzz-libfuzzer` with a Clang build that ships the fuzzer archive (often **Homebrew `llvm`**).
+
 ## UndefinedBehaviorSanitizer (UBSan)
 
 Enabled with `-fsanitize=undefined` (combined in these labs with ASan via `-fsanitize=address,undefined`). Helps catch shifting, alignment, and other undefined behaviors that can accompany memory bugs.

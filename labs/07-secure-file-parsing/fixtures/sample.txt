@@ -1,0 +1,1 @@
+RECORD:v1|status=ok|note=fixture
